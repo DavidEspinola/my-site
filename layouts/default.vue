@@ -13,6 +13,15 @@
   </v-app>
 </template>
 
-<script>
-export default {}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { LocalStorage } from '~/utils/LocalStorage'
+
+@Component
+export default class App extends Vue {
+  created() {
+    const darkTheme = !!LocalStorage.getItem('darkTheme')
+    this.$vuetify.theme.dark = darkTheme
+  }
+}
 </script>

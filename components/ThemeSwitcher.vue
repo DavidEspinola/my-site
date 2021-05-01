@@ -11,12 +11,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { LocalStorage } from '~/utils/LocalStorage'
 
 @Component
 export default class ThemeSwitcher extends Vue {
-  darkTheme: boolean = process.browser
-    ? !!localStorage.getItem('darkTheme') || false
-    : false
+  darkTheme: boolean = !!LocalStorage.getItem('darkTheme')
 
   get icon() {
     return this.darkTheme
@@ -28,11 +27,10 @@ export default class ThemeSwitcher extends Vue {
     this.darkTheme = !this.darkTheme
     this.$vuetify.theme.dark = this.darkTheme
 
-    if (!process.browser) return
     if (this.darkTheme) {
-      window.localStorage.setItem('darkTheme', 'active')
+      LocalStorage.setItem('darkTheme', 'active')
     } else {
-      window.localStorage.removeItem('darkTheme')
+      LocalStorage.removeItem('darkTheme')
     }
   }
 }
