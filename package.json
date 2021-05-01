@@ -2,6 +2,11 @@
   "name": "my-site",
   "version": "1.0.0",
   "private": true,
+  "author": {
+    "name": "David Espínola Pérez",
+    "email": "david.espinola.perez@gmail.com",
+    "url": "https://davidespinola.github.io/my-site/"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -27,7 +32,8 @@
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
-    "nuxt": "^2.15.3"
+    "nuxt": "^2.15.3",
+    "vue-property-decorator": "^9.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -55,6 +61,7 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
     "ts-jest": "^26.5.4",
+    "vue-class-component": "^7.2.6",
     "vue-jest": "^3.0.4"
   }
 }
