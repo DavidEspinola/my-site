@@ -2,7 +2,7 @@
   <v-app>
     <app-bar />
     <v-main>
-      <v-container>
+      <v-container class="main-container">
         <nuxt />
       </v-container>
     </v-main>
@@ -25,3 +25,11 @@ export default class App extends Vue {
   }
 }
 </script>
+
+<style scoped>
+@media screen {
+  .main-container {
+    max-width: 620px;
+  }
+}
+</style>

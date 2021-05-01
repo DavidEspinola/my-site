@@ -11,5 +11,8 @@ module.exports = {
   ],
   plugins: [],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error', { classes: false }],
+  },
 }
