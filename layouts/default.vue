@@ -1,14 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar fixed app flat color="transparent">
-      <v-toolbar-title v-text="'David Espínola Pérez'" />
-      <v-spacer />
-      <v-toolbar-items class="hidden-print-only">
-        <theme-switcher />
-        <v-btn text to="/" nuxt>About</v-btn>
-        <v-btn text to="/inspire" nuxt>Contact</v-btn>
-      </v-toolbar-items>
-    </v-app-bar>
+    <app-bar />
     <v-main>
       <v-container>
         <nuxt />
@@ -22,9 +14,5 @@
 </template>
 
 <script>
-export default {
-  mounted() {
-    this.$vuetify.theme.dark = false
-  },
-}
+export default {}
 </script>

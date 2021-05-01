@@ -46,6 +46,8 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    // https://i18n.nuxtjs.org/
+    'nuxt-i18n',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -77,6 +79,28 @@ export default {
         },
       },
     },
+  },
+
+  // i18n Configuration: https://i18n.nuxtjs.org/es/options-reference
+  i18n: {
+    seo: true,
+    vueI18nLoader: true,
+    defaultLocale: 'es',
+    vueI18n: {
+      fallbackLocale: 'es',
+    },
+    locales: [
+      {
+        code: 'en',
+        iso: 'en',
+        name: 'English',
+      },
+      {
+        code: 'es',
+        iso: 'es',
+        name: 'Español',
+      },
+    ],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

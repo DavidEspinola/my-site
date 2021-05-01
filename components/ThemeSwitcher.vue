@@ -1,7 +1,12 @@
 <template>
-  <v-btn icon @click="changeTheme">
-    <v-icon>{{ icon }}</v-icon>
-  </v-btn>
+  <v-tooltip bottom>
+    <template #activator="{ on }">
+      <v-btn icon v-on="on" @click="changeTheme">
+        <v-icon>{{ icon }}</v-icon>
+      </v-btn>
+    </template>
+    <span>{{ $t('title') }}</span>
+  </v-tooltip>
 </template>
 
 <script lang="ts">
@@ -32,3 +37,10 @@ export default class ThemeSwitcher extends Vue {
   }
 }
 </script>
+
+<i18n lang="yaml">
+en:
+  title: 'Change theme'
+es:
+  title: 'Cambiar tema'
+</i18n>
