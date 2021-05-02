@@ -1,0 +1,47 @@
+@mixin row-gap($number) {
+  row-gap: $number * 4px;
+}
+
+@mixin column-gap($number) {
+  column-gap: $number * 4px;
+}
+
+.r-gap-0 {
+  @include row-gap(0);
+}
+
+.r-gap-1 {
+  @include row-gap(1);
+}
+
+.r-gap-2 {
+  @include row-gap(2);
+}
+
+.r-gap-3 {
+  @include row-gap(3);
+}
+
+.r-gap-4 {
+  @include row-gap(4);
+}
+
+.c-gap-0 {
+  @include column-gap(0);
+}
+
+.c-gap-1 {
+  @include column-gap(1);
+}
+
+.c-gap-2 {
+  @include column-gap(2);
+}
+
+.c-gap-3 {
+  @include column-gap(3);
+}
+
+.c-gap-4 {
+  @include column-gap(4);
+}

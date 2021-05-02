@@ -1,5 +1,5 @@
 ---
-lang: en
+lang: es
 socialLinks:
   - url: https://www.linkedin.com/in/davidespinola/
     userName: davidespinola

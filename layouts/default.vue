@@ -1,8 +1,9 @@
 <template>
   <v-app>
     <app-bar />
-    <v-main>
+    <v-main class="main">
       <v-container class="main-container">
+        <h1 class="text-h2 mb-4 hidden-screen-only">David Espínola Pérez</h1>
         <nuxt />
       </v-container>
     </v-main>
@@ -30,6 +31,12 @@ export default class App extends Vue {
 @media screen {
   .main-container {
     max-width: 620px;
+  }
+}
+
+@media print {
+  .main {
+    padding-top: 0 !important;
   }
 }
 </style>
