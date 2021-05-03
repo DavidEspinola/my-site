@@ -66,6 +66,12 @@ export default class PageIndex extends Vue {
           title: 'IEP',
           client: 'IEP',
           description: lorem,
+          skills: [
+            'Angular.js',
+            'Server administration',
+            'jQuery',
+            'Bootstrap',
+          ],
         },
       ],
     },
@@ -82,24 +88,28 @@ export default class PageIndex extends Vue {
           title: 'Vodafone',
           client: 'Vodafone',
           description: lorem,
+          skills: ['Angular.js', 'Sass', 'Grunt', 'Gulp', 'Git'],
         },
         {
           logo: 'masmovil-logo.png',
           title: 'Más Móvil',
           client: 'Más Móvil',
           description: lorem,
+          skills: ['SPA'],
         },
         {
           logo: 'orange-logo.png',
           title: 'Orange',
           client: 'Orange',
           description: lorem,
+          skills: ['Angular.js', 'Git'],
         },
         {
           logo: 'mutua-logo.png',
           title: 'Mutua Madrileña',
           client: 'Mutua Madrileña',
           description: lorem,
+          skills: ['SPA', 'SEO', 'SSR'],
         },
       ],
     },
@@ -118,6 +128,7 @@ export default class PageIndex extends Vue {
           description: lorem,
         },
       ],
+      skills: ['Angular.js', 'SCRUM', 'Gulp', 'English'],
     },
     {
       startYear: 2010,
@@ -132,12 +143,14 @@ export default class PageIndex extends Vue {
           title: 'NH Hoteles',
           client: 'NH Hoteles',
           description: lorem,
+          skills: ['Databases', 'BI'],
         },
         {
           logo: 'fcc-logo.png',
           title: 'FCC',
           client: 'FCC',
           description: lorem,
+          skills: [],
         },
       ],
     },
@@ -154,12 +167,22 @@ export default class PageIndex extends Vue {
           title: 'ING',
           client: 'ING',
           description: lorem,
+          skills: ['Polymer', 'Webpack', 'SCRUM', 'Git'],
         },
         {
           logo: 'santander-logo.png',
           title: 'Banco Santander',
           client: 'Banco Santander',
           description: lorem,
+          skills: [
+            'Angular',
+            'React',
+            'Vue',
+            'Typescript',
+            'Webpack',
+            'SCRUM',
+            'Git',
+          ],
         },
       ],
     },
@@ -170,7 +193,14 @@ export default class PageIndex extends Vue {
       endMonth: 8,
       title: 'Programador front',
       company: 'Quality Objects',
-      projects: [{ logo: 'ono-logo.png', title: 'ONO', description: lorem }],
+      projects: [
+        {
+          logo: 'ono-logo.png',
+          title: 'ONO',
+          description: lorem,
+          skills: ['jQuery', 'JSP', 'NodeJS'],
+        },
+      ],
     },
   ]
 
@@ -188,9 +218,3 @@ es:
   title: 'Sobre mí'
   experience: 'Experiencia'
 </i18n>
-
-<style lang="scss" scoped>
-.section-title {
-  border-bottom: 3px solid var(--v-primary-darken1);
-}
-</style>

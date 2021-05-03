@@ -3,4 +3,5 @@ export interface Project {
   title: string
   client: string
   description: string
+  skills?: string[]
 }

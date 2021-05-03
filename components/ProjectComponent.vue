@@ -10,15 +10,18 @@
     <div>
       <div class="text-subtitle-2">{{ project.title }}</div>
       <div class="text-body-2">{{ project.description }}</div>
-      <div class="text-caption">Prueba</div>
-      <v-chip
-        class="my-2"
-        color="blue accent-1"
-        small
-        outlined
-        @click="chipAction"
-        >x-small chip</v-chip
-      >
+      <div class="my-2 d-flex flex-wrap c-gap-1">
+        <v-chip
+          v-for="(skill, index) in project.skills || []"
+          :key="index"
+          color="blue"
+          small
+          outlined
+          @click="chipAction"
+        >
+          {{ skill }}
+        </v-chip>
+      </div>
     </div>
   </div>
 </template>

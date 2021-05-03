@@ -1,7 +1,7 @@
 ---
 lang: en
 socialLinks:
-  - url: https://www.linkedin.com/in/davidespinola/
+  - url: https://linkedin.com/in/davidespinola/
     userName: davidespinola
     icon: linkedin
   - url: https://github.com/DavidEspinola
