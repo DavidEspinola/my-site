@@ -27,7 +27,7 @@ export default class App extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @media screen {
   .main-container {
     max-width: 620px;

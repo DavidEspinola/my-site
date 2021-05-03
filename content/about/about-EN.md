@@ -1,5 +1,6 @@
 ---
 lang: en
+location: Madrid (Spain)
 socialLinks:
   - url: https://linkedin.com/in/davidespinola/
     userName: davidespinola

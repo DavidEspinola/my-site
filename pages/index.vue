@@ -4,13 +4,19 @@
       <h1 class="text-h2 mb-4 hidden-print-only">
         {{ $t('title') }}
       </h1>
-      <div class="d-flex flex-wrap mb-4 c-gap-4">
+      <div class="d-flex flex-wrap mb-4 c-gap-4 r-gap-1">
+        <span>
+          <v-icon>mdi-map-marker</v-icon>
+          {{ about.location }}
+        </span>
+
         <a
-          v-for="(link, index) in about.socialLinks"
+          v-for="(link, index) in links"
           :key="index"
           :href="link.url"
           target="_blank"
           class="text-decoration-none primary--text font-weight-medium"
+          :class="link.class"
         >
           <v-icon>mdi-{{ link.icon }}</v-icon>
           <span class="hidden-print-only">{{ link.userName }}</span>
@@ -203,6 +209,20 @@ export default class PageIndex extends Vue {
       ],
     },
   ]
+
+  get links() {
+    const webUrl = process.client ? window.location.href : ''
+
+    return [
+      {
+        url: webUrl,
+        userName: webUrl,
+        icon: 'web',
+        class: 'hidden-screen-only',
+      },
+      ...this.about!.socialLinks,
+    ]
+  }
 
   linkText(url: string) {
     return url.replace('http://', '').replace('https://', '')
