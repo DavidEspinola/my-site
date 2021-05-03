@@ -1,40 +1,63 @@
 <template>
-  <v-row v-if="about">
-    <v-col cols="12">
-      <h1 class="text-h2 mb-4 hidden-print-only">
-        {{ $t('title') }}
-      </h1>
-      <div class="d-flex flex-wrap mb-4 c-gap-4 r-gap-1">
-        <span>
-          <v-icon>mdi-map-marker</v-icon>
-          {{ about.location }}
-        </span>
+  <div v-if="about && skills">
+    <v-row>
+      <v-col v-bind="leftColProps">
+        <h1 class="text-h2 mb-4 hidden-print-only">
+          {{ $t('title') }}
+        </h1>
+        <div class="d-flex flex-wrap mb-4 c-gap-4 r-gap-1">
+          <span>
+            <v-icon>mdi-map-marker</v-icon>
+            {{ about.location }}
+          </span>
 
-        <a
-          v-for="(link, index) in links"
+          <a
+            v-for="(link, index) in links"
+            :key="index"
+            :href="link.url"
+            target="_blank"
+            class="text-decoration-none primary--text font-weight-medium"
+            :class="link.class"
+          >
+            <v-icon>mdi-{{ link.icon }}</v-icon>
+            <span class="hidden-print-only">{{ link.userName }}</span>
+            <span class="hidden-screen-only">{{ linkText(link.url) }}</span>
+          </a>
+        </div>
+        <nuxt-content :document="about" />
+      </v-col>
+      <v-col v-bind="rightColProps"></v-col>
+    </v-row>
+    <v-row>
+      <v-col v-bind="leftColProps">
+        <h2 class="text-h4 mb-4 section-title">
+          {{ $t('experience') }}
+        </h2>
+        <company-experience-component
+          v-for="(exp, index) in experiences"
           :key="index"
-          :href="link.url"
-          target="_blank"
-          class="text-decoration-none primary--text font-weight-medium"
-          :class="link.class"
-        >
-          <v-icon>mdi-{{ link.icon }}</v-icon>
-          <span class="hidden-print-only">{{ link.userName }}</span>
-          <span class="hidden-screen-only">{{ linkText(link.url) }}</span>
-        </a>
-      </div>
-      <nuxt-content :document="about" />
-
-      <h2 class="text-h4 mb-4 section-title pb-1">
-        {{ $t('experience') }}
-      </h2>
-      <company-experience-component
-        v-for="(exp, index) in experiences"
-        :key="index"
-        :experience="exp"
-      />
-    </v-col>
-  </v-row>
+          :experience="exp"
+        />
+      </v-col>
+      <v-col v-bind="rightColProps">
+        <h2 class="text-h4 mb-4 section-title">
+          {{ $t('skills') }}
+        </h2>
+        <div :key="index" class="skill-list">
+          <template v-for="(skill, index) in skills">
+            <div :key="'name' + index" class="text-caption">
+              {{ skill.name }}
+            </div>
+            <v-progress-linear
+              :key="'rate' + index"
+              height="6"
+              :value="skill.rate * 20"
+            />
+          </template>
+        </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -46,17 +69,20 @@ const lorem =
 
 @Component<PageIndex>({
   async fetch() {
-    const [about] = (await this.$content('about')
-      .where({
-        lang: this.$i18n.locale,
-      })
-      .fetch()) as IContentDocument[]
+    const langFilter = {
+      lang: this.$i18n.locale,
+    }
+    const aboutPromise = this.$content('about').where(langFilter).fetch()
+    const skillsPromise = this.$content('skills').where(langFilter).fetch()
 
-    this.about = about
+    const [about, skills] = await Promise.all([aboutPromise, skillsPromise])
+    this.about = (about as IContentDocument)[0]
+    this.skills = (skills as IContentDocument)[0].skills
   },
 })
 export default class PageIndex extends Vue {
   about: IContentDocument | null = null
+  skills: IContentDocument | null = null
 
   experiences = [
     {
@@ -210,6 +236,30 @@ export default class PageIndex extends Vue {
     },
   ]
 
+  leftColProps = {
+    cols: 12,
+    sm: 8,
+    offsetSm: 2,
+    md: 6,
+    offsetMd: 0,
+    lg: 5,
+    offsetLg: 1,
+    xl: 4,
+    offsetXl: 2,
+  }
+
+  rightColProps = {
+    cols: 12,
+    sm: 8,
+    offsetSm: 2,
+    md: 6,
+    offsetMd: 0,
+    lg: 4,
+    offsetLg: 1,
+    xl: 3,
+    offsetXl: 1,
+  }
+
   get links() {
     const webUrl = process.client ? window.location.href : ''
 
@@ -234,7 +284,19 @@ export default class PageIndex extends Vue {
 en:
   title: 'About me'
   experience: 'Experience'
+  skills: 'Skills'
 es:
   title: 'Sobre mí'
   experience: 'Experiencia'
+  skills: 'Conocimientos'
 </i18n>
+
+<style lang="scss" scoped>
+.skill-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 16px;
+  color-adjust: exact;
+}
+</style>

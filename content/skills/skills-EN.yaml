@@ -1,0 +1,32 @@
+lang: en
+skills:
+  - name: Javascript
+    rate: 5
+  - name: Typescript
+    rate: 4
+  - name: NodeJS
+    rate: 4
+  - name: VueJS
+    rate: 5
+  - name: HTML5
+    rate: 4
+  - name: CSS
+    rate: 4
+  - name: Sass
+    rate: 4
+  - name: Git
+    rate: 4
+  - name: Google Cloud
+    rate: 3
+  - name: DevOps
+    rate: 3
+  - name: Angular 2+
+    rate: 3
+  - name: React
+    rate: 3
+  - name: Polymer
+    rate: 3
+  - name: Electron
+    rate: 2
+  - name: PWA
+    rate: 2
