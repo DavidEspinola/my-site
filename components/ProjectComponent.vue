@@ -17,7 +17,6 @@
           color="blue"
           small
           outlined
-          @click="chipAction"
         >
           {{ skill }}
         </v-chip>
@@ -33,10 +32,6 @@ import { Project } from '@/types/Project'
 @Component
 export default class ProjectComponent extends Vue {
   @Prop({ type: Object, required: true }) project!: Project
-
-  chipAction() {
-    console.log('chip!')
-  }
 }
 </script>
 

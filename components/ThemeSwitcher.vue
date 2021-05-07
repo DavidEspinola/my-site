@@ -38,7 +38,7 @@ export default class ThemeSwitcher extends Vue {
 
 <i18n lang="yaml">
 en:
-  title: 'Change theme'
+  title: Change theme
 es:
-  title: 'Cambiar tema'
+  title: Cambiar tema
 </i18n>

@@ -26,9 +26,9 @@
         </div>
         <nuxt-content :document="about" />
       </v-col>
-      <v-col v-bind="rightColProps"></v-col>
+      <v-col v-bind="rightColProps" class="pa-0"></v-col>
     </v-row>
-    <v-row>
+    <v-row class="mt-0">
       <v-col v-bind="leftColProps">
         <h2 class="text-h4 mb-4 section-title">
           {{ $t('experience') }}
@@ -43,18 +43,12 @@
         <h2 class="text-h4 mb-4 section-title">
           {{ $t('skills') }}
         </h2>
-        <div class="skill-list">
-          <template v-for="(skill, index) in skills">
-            <div :key="'name' + index" class="text-caption">
-              {{ skill.name }}
-            </div>
-            <v-progress-linear
-              :key="'rate' + index"
-              height="6"
-              :value="skill.rate * 20"
-            />
-          </template>
-        </div>
+        <SkillList :skills="skills" />
+
+        <h2 class="mt-8 text-h4 mb-4 section-title">
+          {{ $t('languages') }}
+        </h2>
+        <SkillList :skills="languages" />
       </v-col>
     </v-row>
   </div>
@@ -74,15 +68,24 @@ const lorem =
     }
     const aboutPromise = this.$content('about').where(langFilter).fetch()
     const skillsPromise = this.$content('skills').where(langFilter).fetch()
+    const languagesPromise = this.$content('languages')
+      .where(langFilter)
+      .fetch()
 
-    const [about, skills] = await Promise.all([aboutPromise, skillsPromise])
+    const [about, skills, languages] = await Promise.all([
+      aboutPromise,
+      skillsPromise,
+      languagesPromise,
+    ])
     this.about = (about as IContentDocument)[0]
     this.skills = (skills as IContentDocument)[0].skills
+    this.languages = (languages as IContentDocument)[0].languages
   },
 })
 export default class PageIndex extends Vue {
   about: IContentDocument | null = null
   skills: IContentDocument | null = null
+  languages: IContentDocument | null = null
 
   experiences = [
     {
@@ -282,21 +285,13 @@ export default class PageIndex extends Vue {
 
 <i18n lang="yaml">
 en:
-  title: 'About me'
-  experience: 'Experience'
-  skills: 'Skills'
+  title: About me
+  experience: Experience
+  skills: Skills
+  languages: Languages
 es:
-  title: 'Sobre mí'
-  experience: 'Experiencia'
-  skills: 'Conocimientos'
+  title: Sobre mí
+  experience: Experiencia
+  skills: Conocimientos
+  languages: Idiomas
 </i18n>
-
-<style lang="scss" scoped>
-.skill-list {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  column-gap: 16px;
-  color-adjust: exact;
-}
-</style>

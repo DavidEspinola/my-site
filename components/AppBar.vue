@@ -39,9 +39,9 @@ export default class AppBar extends Vue {
 
 <i18n lang="yaml">
 en:
-  aboutLink: 'About me'
-  contactLink: 'Contact'
+  aboutLink: About me
+  contactLink: Contact
 es:
-  aboutLink: 'Sobre mí'
-  contactLink: 'Contacto'
+  aboutLink: Sobre mí
+  contactLink: Contacto
 </i18n>

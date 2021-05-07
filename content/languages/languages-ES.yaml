@@ -1,0 +1,8 @@
+lang: es
+languages:
+  - name: Español
+    rate: 5
+  - name: Inglés
+    rate: 4
+  - name: Francés
+    rate: 2

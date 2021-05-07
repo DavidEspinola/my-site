@@ -90,7 +90,7 @@ export default class CompanyExperienceComponent extends Vue {
 
 <i18n lang="yaml">
 en:
-  now: 'Now'
+  now: Now
 es:
-  now: 'Ahora'
+  now: Ahora
 </i18n>

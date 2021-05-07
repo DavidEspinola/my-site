@@ -17,7 +17,7 @@
 
 <i18n lang="yaml">
 en:
-  title: 'Contact'
+  title: Contact
 es:
-  title: 'Contacto'
+  title: Contacto
 </i18n>

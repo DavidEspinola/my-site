@@ -47,7 +47,7 @@ export default class LangSwitcher extends Vue {
 
 <i18n lang="yaml">
 en:
-  title: 'Change language'
+  title: Change language
 es:
-  title: 'Cambiar idioma'
+  title: Cambiar idioma
 </i18n>
