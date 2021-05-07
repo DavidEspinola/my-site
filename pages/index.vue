@@ -43,7 +43,7 @@
         <h2 class="text-h4 mb-4 section-title">
           {{ $t('skills') }}
         </h2>
-        <div :key="index" class="skill-list">
+        <div class="skill-list">
           <template v-for="(skill, index) in skills">
             <div :key="'name' + index" class="text-caption">
               {{ skill.name }}

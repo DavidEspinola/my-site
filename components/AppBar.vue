@@ -24,10 +24,12 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class AppBar extends Vue {
-  links = [
-    { text: this.$t('aboutLink'), to: this.localePath('/') },
-    { text: this.$t('contactLink'), to: this.localePath('/contact') },
-  ]
+  get links() {
+    return [
+      { text: this.$t('aboutLink'), to: this.localePath('/') },
+      { text: this.$t('contactLink'), to: this.localePath('/contact') },
+    ]
+  }
 
   get color() {
     return this.$vuetify.theme.dark ? 'black' : 'white'
