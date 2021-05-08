@@ -37,10 +37,3 @@ export default class CompanyExperienceComponent extends Vue {
   }
 }
 </script>
-
-<i18n lang="yaml">
-en:
-  now: Now
-es:
-  now: Ahora
-</i18n>

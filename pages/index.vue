@@ -40,15 +40,34 @@
         />
       </v-col>
       <v-col v-bind="rightColProps">
-        <h2 class="text-h4 mb-4 section-title">
-          {{ $t('skills') }}
-        </h2>
-        <SkillList :skills="skills" />
+        <v-row>
+          <v-col cols="12">
+            <h2 class="text-h4 mb-4 section-title">
+              {{ $t('skills') }}
+            </h2>
+            <SkillList :skills="skills" />
+          </v-col>
 
-        <h2 class="mt-8 text-h4 mb-4 section-title">
-          {{ $t('languages') }}
-        </h2>
-        <SkillList :skills="languages" />
+          <v-col cols="12">
+            <h2 class="text-h4 mb-4 section-title">
+              {{ $t('languages') }}
+            </h2>
+            <SkillList :skills="languages" />
+          </v-col>
+
+          <v-col cols="12" class="education">
+            <h2 class="text-h4 mb-4 section-title">
+              {{ $t('education') }}
+            </h2>
+            <div v-for="(study, index) in studies" :key="index">
+              <div class="text-h6">
+                {{ study.title }}
+              </div>
+              <title-dates :title="study.location" :start-date="new Date()" />
+              <nuxt-content class="text-body-2" :document="study" />
+            </div>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </div>
@@ -71,21 +90,27 @@ const lorem =
     const languagesPromise = this.$content('languages')
       .where(langFilter)
       .fetch()
+    const studiesPromise = this.$content('studies').where(langFilter).fetch()
 
-    const [about, skills, languages] = await Promise.all([
+    const [about, skills, languages, studies] = await Promise.all([
       aboutPromise,
       skillsPromise,
       languagesPromise,
+      studiesPromise,
     ])
+
+    console.log(studies)
     this.about = (about as IContentDocument)[0]
     this.skills = (skills as IContentDocument)[0].skills
     this.languages = (languages as IContentDocument)[0].languages
+    this.studies = studies as IContentDocument[]
   },
 })
 export default class PageIndex extends Vue {
   about: IContentDocument | null = null
   skills: IContentDocument | null = null
   languages: IContentDocument | null = null
+  studies: IContentDocument[] | null = null
 
   experiences = [
     {
@@ -289,9 +314,19 @@ en:
   experience: Experience
   skills: Skills
   languages: Languages
+  education: Education
 es:
   title: Sobre mí
   experience: Experiencia
   skills: Conocimientos
   languages: Idiomas
+  education: Educación
 </i18n>
+
+<style lang="scss" scoped>
+@media print {
+  .education {
+    order: -1;
+  }
+}
+</style>

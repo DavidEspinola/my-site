@@ -17,7 +17,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
-import endOfMonth from 'date-fns/endOfMonth'
 import intervalToDuration from 'date-fns/intervalToDuration'
 import formatDuration from 'date-fns/formatDuration'
 import format from 'date-fns/format'
@@ -33,17 +32,16 @@ export default class TitleDates extends Vue {
   get duration() {
     let endDate = this.endDate
     if (!endDate) {
-      const now = new Date()
-      endDate = endOfMonth(new Date(now.getFullYear(), now.getMonth(), 1))
+      endDate = new Date()
     }
 
-    return formatDuration(
-      intervalToDuration({ start: this.startDate, end: endDate }),
-      {
-        format: ['years', 'months'],
-        locale: this.locale,
-      }
-    )
+    const duration = intervalToDuration({ start: this.startDate, end: endDate })
+    const lessThanMonth = !duration.years && !duration.months
+
+    return formatDuration(duration, {
+      format: lessThanMonth ? ['days'] : ['years', 'months'],
+      locale: this.locale,
+    })
   }
 
   get interval() {
