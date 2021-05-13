@@ -33,10 +33,10 @@
         <h2 class="text-h4 mb-4 section-title">
           {{ $t('experience') }}
         </h2>
-        <company-experience-component
+        <milestone-component
           v-for="(exp, index) in experiences"
           :key="index"
-          :experience="exp"
+          :milestone="exp"
         />
       </v-col>
       <v-col v-bind="rightColProps">
@@ -59,13 +59,11 @@
             <h2 class="text-h4 mb-4 section-title">
               {{ $t('education') }}
             </h2>
-            <div v-for="(study, index) in studies" :key="index">
-              <div class="text-h6">
-                {{ study.title }}
-              </div>
-              <title-dates :title="study.location" :start-date="new Date()" />
-              <nuxt-content class="text-body-2" :document="study" />
-            </div>
+            <milestone-component
+              v-for="(study, index) in studies"
+              :key="index"
+              :milestone="study"
+            />
           </v-col>
         </v-row>
       </v-col>
@@ -76,6 +74,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IContentDocument } from '@nuxt/content/types/content'
+import uniq from 'lodash/uniq'
+import flatMap from 'lodash/flatMap'
 
 const lorem =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam doloribus nesciunt est laudantium, perferendis voluptatum quidem, harum at, asperiores molestias mollitia quia beatae maxime voluptate commodi hic aspernatur iure cupiditate.'
@@ -90,20 +90,45 @@ const lorem =
     const languagesPromise = this.$content('languages')
       .where(langFilter)
       .fetch()
-    const studiesPromise = this.$content('studies').where(langFilter).fetch()
+    const studiesPromise = this.$content('studies')
+      .sortBy('milestone_end_date', 'desc')
+      .sortBy('milestone_start_date', 'desc')
+      .where(langFilter)
+      .fetch()
+    const experiencesPromise = this.$content('experiences')
+      .sortBy('milestone_end_date', 'desc')
+      .sortBy('milestone_start_date', 'desc')
+      .where(langFilter)
+      .fetch()
 
-    const [about, skills, languages, studies] = await Promise.all([
+    const [about, skills, languages, studies, experiences] = await Promise.all([
       aboutPromise,
       skillsPromise,
       languagesPromise,
       studiesPromise,
+      experiencesPromise,
     ])
 
-    console.log(studies)
     this.about = (about as IContentDocument)[0]
     this.skills = (skills as IContentDocument)[0].skills
     this.languages = (languages as IContentDocument)[0].languages
     this.studies = studies as IContentDocument[]
+
+    const projectUrls = uniq(
+      flatMap(experiences as any, (exp) => exp.subMilestones)
+    )
+
+    const projects = await Promise.all(
+      projectUrls.map((url) => this.$content(url).fetch())
+    )
+
+    this.experiences = (experiences as IContentDocument).map((exp: any) => ({
+      ...exp,
+      subMilestones: (exp.subMilestones || []).map(
+        (subMilestone: string) =>
+          projects[projectUrls.findIndex((url) => url === subMilestone)]
+      ),
+    }))
   },
 })
 export default class PageIndex extends Vue {
@@ -111,85 +136,9 @@ export default class PageIndex extends Vue {
   skills: IContentDocument | null = null
   languages: IContentDocument | null = null
   studies: IContentDocument[] | null = null
+  experiences: IContentDocument[] | null = null
 
-  experiences = [
-    {
-      startYear: 2010,
-      startMonth: 2,
-      endYear: 2015,
-      endMonth: 8,
-      title: 'Programador front',
-      company: 'Instituto Europeo de Postgrado',
-      projects: [
-        {
-          logo: 'iep-logo.png',
-          title: 'IEP',
-          client: 'IEP',
-          description: lorem,
-          skills: [
-            'Angular.js',
-            'Server administration',
-            'jQuery',
-            'Bootstrap',
-          ],
-        },
-      ],
-    },
-    {
-      startYear: 2010,
-      startMonth: 3,
-      endYear: 2012,
-      endMonth: 8,
-      title: 'Programador front',
-      company: 'Everis',
-      projects: [
-        {
-          logo: 'vodafone-logo.png',
-          title: 'Vodafone',
-          client: 'Vodafone',
-          description: lorem,
-          skills: ['Angular.js', 'Sass', 'Grunt', 'Gulp', 'Git'],
-        },
-        {
-          logo: 'masmovil-logo.png',
-          title: 'Más Móvil',
-          client: 'Más Móvil',
-          description: lorem,
-          skills: ['SPA'],
-        },
-        {
-          logo: 'orange-logo.png',
-          title: 'Orange',
-          client: 'Orange',
-          description: lorem,
-          skills: ['Angular.js', 'Git'],
-        },
-        {
-          logo: 'mutua-logo.png',
-          title: 'Mutua Madrileña',
-          client: 'Mutua Madrileña',
-          description: lorem,
-          skills: ['SPA', 'SEO', 'SSR'],
-        },
-      ],
-    },
-    {
-      startYear: 2010,
-      startMonth: 2,
-      endYear: 2015,
-      endMonth: 8,
-      title: 'Programador front',
-      company: 'Randstad y FCC',
-      projects: [
-        {
-          logo: 'otan-logo.png',
-          title: 'OTAN',
-          client: 'OTAN',
-          description: lorem,
-        },
-      ],
-      skills: ['Angular.js', 'SCRUM', 'Gulp', 'English'],
-    },
+  experiencesOLD = [
     {
       startYear: 2010,
       startMonth: 2,
@@ -211,54 +160,6 @@ export default class PageIndex extends Vue {
           client: 'FCC',
           description: lorem,
           skills: [],
-        },
-      ],
-    },
-    {
-      startYear: 2010,
-      startMonth: 2,
-      endYear: 2015,
-      endMonth: 8,
-      title: 'Programador front',
-      company: 'Sopra',
-      projects: [
-        {
-          logo: 'ing-logo.jpeg',
-          title: 'ING',
-          client: 'ING',
-          description: lorem,
-          skills: ['Polymer', 'Webpack', 'SCRUM', 'Git'],
-        },
-        {
-          logo: 'santander-logo.png',
-          title: 'Banco Santander',
-          client: 'Banco Santander',
-          description: lorem,
-          skills: [
-            'Angular',
-            'React',
-            'Vue',
-            'Typescript',
-            'Webpack',
-            'SCRUM',
-            'Git',
-          ],
-        },
-      ],
-    },
-    {
-      startYear: 2010,
-      startMonth: 2,
-      endYear: 2015,
-      endMonth: 8,
-      title: 'Programador front',
-      company: 'Quality Objects',
-      projects: [
-        {
-          logo: 'ono-logo.png',
-          title: 'ONO',
-          description: lorem,
-          skills: ['jQuery', 'JSP', 'NodeJS'],
         },
       ],
     },

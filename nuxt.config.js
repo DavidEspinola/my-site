@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+const buildDate = new Date()
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -109,4 +110,20 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  hooks: {
+    'content:file:beforeInsert': (document) => {
+      // Special fields in content to provide custom dates sort
+      if (document.extension !== '.md') return
+      const { startYear, startMonth } = document
+      const { endYear, endMonth } = document
+
+      if (!startYear || !startMonth) return
+      const startDate = new Date(startYear, startMonth - 1, 1)
+      const endDate =
+        endYear && endMonth ? new Date(endYear, endMonth, 1) : buildDate
+      document.milestone_start_date = startDate.valueOf()
+      document.milestone_end_date = endDate.valueOf()
+    },
+  },
 }
