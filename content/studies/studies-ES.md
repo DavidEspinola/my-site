@@ -2,7 +2,7 @@
 lang: es
 startYear: 2010
 startMonth: 9
-endYear: 2013
+endYear: 2017
 endMonth: 6
 header: Grado en Ingeniería de Sistemas de Telecomunicación
 title: Universidad de Málaga

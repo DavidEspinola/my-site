@@ -1,15 +1,15 @@
 <template>
   <div class="milestone">
-    <div v-if="milestone.header" class="text-h6">
-      {{ milestone.header }}
+    <div v-if="content.header" class="text-h6">
+      {{ content.header }}
     </div>
 
     <div class="details d-flex mb-2 c-gap-4">
-      <v-avatar v-if="milestone.logo" tile size="36">
+      <v-avatar v-if="content.logo" tile size="36">
         <img
           class="logo"
-          :src="require(`~/assets/logos/${milestone.logo}`)"
-          :alt="milestone.logoAlt || 'Logo'"
+          :src="require(`~/assets/logos/${content.logo}`)"
+          :alt="content.logoAlt || 'Logo'"
         />
       </v-avatar>
       <div>
@@ -17,30 +17,30 @@
           v-if="haveTitleOrDates"
           class="mb-2 d-flex flex-wrap align-center c-gap-2"
         >
-          <span v-if="milestone.title" :class="titleClass">{{
-            milestone.title
+          <span v-if="content.title" :class="titleClass">{{
+            content.title
           }}</span>
           <dates-interval
-            :start-month="milestone.startMonth"
-            :start-year="milestone.startYear"
-            :end-month="milestone.endMonth"
-            :end-year="milestone.endYear"
+            :start-month="content.startMonth"
+            :start-year="content.startYear"
+            :end-month="content.endMonth"
+            :end-year="content.endYear"
           />
           <dates-duration
-            :start-month="milestone.startMonth"
-            :start-year="milestone.startYear"
-            :end-month="milestone.endMonth"
-            :end-year="milestone.endYear"
+            :start-month="content.startMonth"
+            :start-year="content.startYear"
+            :end-month="content.endMonth"
+            :end-year="content.endYear"
           />
         </div>
 
-        <nuxt-content class="text-body-2" :document="milestone" />
+        <nuxt-content class="text-body-2" :document="content" />
         <div
-          v-if="milestone.skills && milestone.skills.length"
+          v-if="content.skills && content.skills.length"
           class="my-2 d-flex flex-wrap c-gap-1 r-gap-1"
         >
           <v-chip
-            v-for="(skill, index) in milestone.skills || []"
+            v-for="(skill, index) in content.skills || []"
             :key="index"
             color="blue"
             small
@@ -69,13 +69,16 @@ export default class MilestoneComponent extends Vue {
   @Prop({ type: Object, required: true }) milestone!: Milestone | SubMilestone
 
   get isSubMilestone() {
-    return !this.milestone.header
+    return this.milestone instanceof SubMilestone
+  }
+
+  get content() {
+    return this.milestone.content
   }
 
   get haveTitleOrDates() {
     return (
-      (this.milestone.startYear && this.milestone.startMonth) ||
-      this.milestone.title
+      (this.content.startYear && this.content.startMonth) || this.content.title
     )
   }
 

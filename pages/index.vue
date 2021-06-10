@@ -74,32 +74,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IContentDocument } from '@nuxt/content/types/content'
-import uniq from 'lodash/uniq'
-import flatMap from 'lodash/flatMap'
+import { ContentService } from '~/utils/ContentService'
+import { Milestone } from '~/types/Milestone'
 
 const lorem =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam doloribus nesciunt est laudantium, perferendis voluptatum quidem, harum at, asperiores molestias mollitia quia beatae maxime voluptate commodi hic aspernatur iure cupiditate.'
 
 @Component<PageIndex>({
   async fetch() {
-    const langFilter = {
-      lang: this.$i18n.locale,
-    }
-    const aboutPromise = this.$content('about').where(langFilter).fetch()
-    const skillsPromise = this.$content('skills').where(langFilter).fetch()
-    const languagesPromise = this.$content('languages')
-      .where(langFilter)
-      .fetch()
-    const studiesPromise = this.$content('studies')
-      .sortBy('milestone_end_date', 'desc')
-      .sortBy('milestone_start_date', 'desc')
-      .where(langFilter)
-      .fetch()
-    const experiencesPromise = this.$content('experiences')
-      .sortBy('milestone_end_date', 'desc')
-      .sortBy('milestone_start_date', 'desc')
-      .where(langFilter)
-      .fetch()
+    const lang = this.$i18n.locale
+
+    const aboutPromise = this.$content('about').where({ lang }).fetch()
+    const skillsPromise = this.$content('skills').where({ lang }).fetch()
+    const languagesPromise = this.$content('languages').where({ lang }).fetch()
+
+    const studiesPromise = ContentService.getMilestones('studies', lang)
+    const experiencesPromise = ContentService.getMilestones('experiences', lang)
 
     const [about, skills, languages, studies, experiences] = await Promise.all([
       aboutPromise,
@@ -112,31 +102,16 @@ const lorem =
     this.about = (about as IContentDocument)[0]
     this.skills = (skills as IContentDocument)[0].skills
     this.languages = (languages as IContentDocument)[0].languages
-    this.studies = studies as IContentDocument[]
-
-    const projectUrls = uniq(
-      flatMap(experiences as any, (exp) => exp.subMilestones)
-    )
-
-    const projects = await Promise.all(
-      projectUrls.map((url) => this.$content(url).fetch())
-    )
-
-    this.experiences = (experiences as IContentDocument).map((exp: any) => ({
-      ...exp,
-      subMilestones: (exp.subMilestones || []).map(
-        (subMilestone: string) =>
-          projects[projectUrls.findIndex((url) => url === subMilestone)]
-      ),
-    }))
+    this.studies = studies
+    this.experiences = experiences
   },
 })
 export default class PageIndex extends Vue {
   about: IContentDocument | null = null
   skills: IContentDocument | null = null
   languages: IContentDocument | null = null
-  studies: IContentDocument[] | null = null
-  experiences: IContentDocument[] | null = null
+  studies: Milestone[] | null = null
+  experiences: Milestone[] | null = null
 
   experiencesOLD = [
     {
