@@ -74,22 +74,23 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { IContentDocument } from '@nuxt/content/types/content'
-import { ContentService } from '~/utils/ContentService'
 import { Milestone } from '~/types/Milestone'
+import { ContentService } from '~/utils/ContentService'
 
 const lorem =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam doloribus nesciunt est laudantium, perferendis voluptatum quidem, harum at, asperiores molestias mollitia quia beatae maxime voluptate commodi hic aspernatur iure cupiditate.'
 
 @Component<PageIndex>({
   async fetch() {
+    const contentService = new ContentService(this.$content)
     const lang = this.$i18n.locale
 
     const aboutPromise = this.$content('about').where({ lang }).fetch()
     const skillsPromise = this.$content('skills').where({ lang }).fetch()
     const languagesPromise = this.$content('languages').where({ lang }).fetch()
 
-    const studiesPromise = ContentService.getMilestones('studies', lang)
-    const experiencesPromise = ContentService.getMilestones('experiences', lang)
+    const studiesPromise = contentService.getMilestones('studies', lang)
+    const experiencesPromise = contentService.getMilestones('experiences', lang)
 
     const [about, skills, languages, studies, experiences] = await Promise.all([
       aboutPromise,
