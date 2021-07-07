@@ -26,11 +26,29 @@ export default class App extends Vue {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 @media print {
   .main {
     padding-top: 0 !important;
+  }
+}
+</style>
+
+<style lang="scss">
+@media print {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .text-h1,
+  .text-h2,
+  .text-h3,
+  .text-h4,
+  .text-h5,
+  .text-h6 {
+    break-after: avoid;
   }
 }
 </style>

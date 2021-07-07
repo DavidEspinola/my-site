@@ -8,4 +8,4 @@ skills:
   - Consultoría
 ---
 
-**Asesoramiento** sobre tecnologías front y **onboarding** de un nuevo equipo de desarrollo.
+**Asesoramiento** estratégico sobre tecnologías front e **introducción** y contexto a un nuevo equipo de desarrollo.

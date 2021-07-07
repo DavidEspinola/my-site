@@ -5,7 +5,10 @@ startMonth: 9
 endYear: 2017
 endMonth: 6
 header: Grado en Ingeniería de Sistemas de Telecomunicación
-title: Universidad de Málaga
 ---
 
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam doloribus nesciunt est laudantium, perferendis voluptatum quidem, harum at, asperiores molestias mollitia quia beatae maxime voluptate commodi hic aspernatur iure cupiditate.
+Inicio de la carrera en la __Universidad de Málaga__ y posterior traslado a la __Universidad Europea de Madrid__.
+
+Proyecto fin de carrera propuesto por mí con temática de **IoT**. Participación en 3 **concursos de emprendimiento** con el proyecto, ganando uno de ellos.
+
+Fundador y presidente del **club de robótica**, representante estudiantil y colaborador en el **club de emprendedores**.

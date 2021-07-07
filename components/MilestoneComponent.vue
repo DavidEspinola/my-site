@@ -1,6 +1,6 @@
 <template>
-  <div class="milestone">
-    <div v-if="content.header" class="text-h6">
+  <div :class="rootClass" class="milestone">
+    <div v-if="content.header" class="header text-h6">
       {{ content.header }}
     </div>
 
@@ -15,7 +15,7 @@
       <div>
         <div
           v-if="haveTitleOrDates"
-          class="mb-2 d-flex flex-wrap align-center c-gap-2"
+          class="title-dates mb-2 d-flex flex-wrap align-center c-gap-2"
         >
           <span v-if="content.title" :class="titleClass">{{
             content.title
@@ -69,7 +69,7 @@ export default class MilestoneComponent extends Vue {
   @Prop({ type: Object, required: true }) milestone!: Milestone | SubMilestone
 
   get isSubMilestone() {
-    return this.milestone instanceof SubMilestone
+    return !this.milestone.content.header
   }
 
   get content() {
@@ -80,6 +80,10 @@ export default class MilestoneComponent extends Vue {
     return (
       (this.content.startYear && this.content.startMonth) || this.content.title
     )
+  }
+
+  get rootClass() {
+    return this.isSubMilestone ? 'submilestone' : ''
   }
 
   get titleClass() {
@@ -103,6 +107,18 @@ export default class MilestoneComponent extends Vue {
   .details:hover .logo {
     filter: none;
     opacity: 1;
+  }
+}
+
+@media print {
+  .milestone {
+    .header,
+    .title-dates {
+      break-after: avoid;
+    }
+    &.submilestone {
+      break-inside: avoid;
+    }
   }
 }
 </style>
