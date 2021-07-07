@@ -10,4 +10,4 @@ skills:
   - SCRUM
 ---
 
-Desarrollo de funcionalidad de **catálogo de dispositivos** de la web pública, **asesoramiento técnico** y resolución de bugs críticos.
+Desarrollo de funcionalidad de **catálogo de dispositivos** de la web pública, **asesoramiento técnico**, formación, resolución de dudas del equipo y corrección de bugs críticos.

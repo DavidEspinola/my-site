@@ -10,4 +10,5 @@ skills:
   - Consultoría
 ---
 
-Propuestas y guiado en soluciones para **mejorar el SEO en SPAs** mediante Server Side Rendering.
+Resolución de dudas y guiado en soluciones para **mejorar el SEO en SPAs** mediante Server Side Rendering.
+

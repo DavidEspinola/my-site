@@ -24,7 +24,7 @@
             <span class="hidden-screen-only">{{ linkText(link.url) }}</span>
           </a>
         </div>
-        <nuxt-content :document="about" />
+        <nuxt-content :document="about" class="text-body-2" />
       </v-col>
       <v-col v-bind="rightColProps" class="pa-0"></v-col>
     </v-row>
@@ -41,14 +41,14 @@
       </v-col>
       <v-col v-bind="rightColProps">
         <v-row>
-          <v-col cols="12">
+          <v-col cols="12" class="skills">
             <h2 class="text-h4 mb-4 section-title">
               {{ $t('skills') }}
             </h2>
             <SkillList :skills="skills" />
           </v-col>
 
-          <v-col cols="12">
+          <v-col cols="12" class="languages">
             <h2 class="text-h4 mb-4 section-title">
               {{ $t('languages') }}
             </h2>
@@ -76,9 +76,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { IContentDocument } from '@nuxt/content/types/content'
 import { Milestone } from '~/types/Milestone'
 import { ContentService } from '~/utils/ContentService'
-
-const lorem =
-  'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam doloribus nesciunt est laudantium, perferendis voluptatum quidem, harum at, asperiores molestias mollitia quia beatae maxime voluptate commodi hic aspernatur iure cupiditate.'
 
 @Component<PageIndex>({
   async fetch() {
@@ -114,33 +111,6 @@ export default class PageIndex extends Vue {
   studies: Milestone[] | null = null
   experiences: Milestone[] | null = null
 
-  experiencesOLD = [
-    {
-      startYear: 2010,
-      startMonth: 2,
-      endYear: 2015,
-      endMonth: 8,
-      title: 'Programador front',
-      company: 'Accenture',
-      projects: [
-        {
-          logo: 'nh-logo.png',
-          title: 'NH Hoteles',
-          client: 'NH Hoteles',
-          description: lorem,
-          skills: ['Databases', 'BI'],
-        },
-        {
-          logo: 'fcc-logo.png',
-          title: 'FCC',
-          client: 'FCC',
-          description: lorem,
-          skills: [],
-        },
-      ],
-    },
-  ]
-
   leftColProps = {
     cols: 12,
     sm: 8,
@@ -166,15 +136,17 @@ export default class PageIndex extends Vue {
   }
 
   get links() {
-    const webUrl = process.client ? window.location.href : ''
+    // const webUrl = process.client ? window.location.href : ''
 
     return [
+      /*
       {
         url: webUrl,
         userName: webUrl,
         icon: 'web',
         class: 'hidden-screen-only',
       },
+      */
       ...this.about!.socialLinks,
     ]
   }
@@ -202,6 +174,11 @@ es:
 
 <style lang="scss" scoped>
 @media print {
+  .education,
+  .skills,
+  .languages {
+    break-inside: avoid;
+  }
   .education {
     order: -1;
   }
